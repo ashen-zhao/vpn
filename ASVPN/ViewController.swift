@@ -7,35 +7,6 @@
 //
 
 import UIKit
-import Alamofire
-
-struct RegexHelper {
-    let regex: NSRegularExpression
-    
-    init(_ pattern: String) throws {
-        try regex = NSRegularExpression(pattern: pattern,
-                                        options: .CaseInsensitive)
-    }
-    
-    func match(input: String) -> Bool {
-        let matches = regex.matchesInString(input,
-                                            options: [],
-                                            range: NSMakeRange(0, input.characters.count))
-        return matches.count > 0
-    }
-}
-infix operator =~ {
-associativity none
-precedence 130
-}
-
-func =~(lhs: String, rhs: String) -> Bool {
-    do {
-        return try RegexHelper(rhs).match(lhs)
-    } catch _ {
-        return false
-    }
-}
 
 class ViewController: UIViewController {
 
@@ -52,7 +23,7 @@ class ViewController: UIViewController {
         getVPN()
     }
     
-    @IBAction func btnActionCopt(sender: AnyObject) {
+    @IBAction func btnActionCopt(_ sender: AnyObject) {
         
         if vpns.count == 0 {
             return
@@ -62,42 +33,53 @@ class ViewController: UIViewController {
         lblPort.text = model.port
         lplPwd.text = model.pwd
         lblSytle.text = model.style
-        UIPasteboard.generalPasteboard().string = model.pwd.stringByReplacingOccurrencesOfString("密码：", withString: "")
+        UIPasteboard.general.string = model.pwd.replacingOccurrences(of: "密码：", with: "")
         refreshCount = refreshCount + 1
         if refreshCount > 2 {
             refreshCount = 0
         }
+        
     }
     
     
-    private func getVPN() {
-        Alamofire.request(.GET, "http://www.ishadowsocks.net")
-            .responseString { response in
-                self.check(String(response.result.value))
-        }
+    func getVPN() {
+        
+     
+        let url = URL(string: "http://www.ishadowsocks.net")
+        let request = URLRequest(url: url!)
+     
+        let congiguration = URLSessionConfiguration.default
+        let session = URLSession(configuration: congiguration)
+       
+        let task = session.dataTask(with: request, completionHandler: { (data, response, error)->Void in
+            if error == nil{
+                self.check(String(data: data!, encoding: String.Encoding.utf8)!)
+            }
+        })
+       
+        task.resume()
     }
     
-    
-    private func check(str: String) {
+    func check(_ str: String) {
         
         do {
-    
-            let pattern = "([A-Za-z])服务器地址:(.*?)</h4>.*?端口:(.*?)</h4>.*?密码:(.*?)</h4>.*?加密方式:(.*?)</h4>"
-
+            var pattern = "<h4>([\\w\\W])服务器地址:(.*?)</h4>"
+            pattern = pattern.appending("[\\w\\W]+?端口:(.*?)</h4>")
+            pattern = pattern.appending("[\\w\\W]+?密码:(.*?)</h4>")
+            pattern = pattern.appending("[\\w\\W]+?加密方式:(.*?)</h4>")
             let regex = try NSRegularExpression(pattern: pattern, options:
-                NSRegularExpressionOptions.CaseInsensitive)
+                NSRegularExpression.Options.caseInsensitive)
             
-            let res = regex.matchesInString(str, options: NSMatchingOptions(rawValue: 0), range: NSMakeRange(0, str.characters.count))
-        
+            let res = regex.matches(in: str, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, str.characters.count))
             for checkingRes in res {
-                let name = (str as NSString).substringWithRange(checkingRes.rangeAtIndex(1))
-                let ip = (str as NSString).substringWithRange(checkingRes.rangeAtIndex(2))
-                let port = (str as NSString).substringWithRange(checkingRes.rangeAtIndex(3))
-                let pwd = (str as NSString).substringWithRange(checkingRes.rangeAtIndex(4))
-                let style = (str as NSString).substringWithRange(checkingRes.rangeAtIndex(5))
+                let name = (str as NSString).substring(with: checkingRes.rangeAt(1))
+                let ip = (str as NSString).substring(with: checkingRes.rangeAt(2))
+                let port = (str as NSString).substring(with: checkingRes.rangeAt(3))
+                let pwd = (str as NSString).substring(with: checkingRes.rangeAt(4))
+                let style = (str as NSString).substring(with: checkingRes.rangeAt(5))
                 
                 let vpnmodel = VPNModel()
-                vpnmodel.ip = name + "服务器地址：" + ip.uppercaseString
+                vpnmodel.ip = name + "服务器地址：" + ip.uppercased()
                 vpnmodel.port = "端口：" + port
                 vpnmodel.pwd = "密码：" + pwd
                 vpnmodel.style = "加密方式：" + style
@@ -108,7 +90,7 @@ class ViewController: UIViewController {
                 lblPort.text = vpnmodel.port
                 lplPwd.text = vpnmodel.pwd
                 lblSytle.text = vpnmodel.style
-                UIPasteboard.generalPasteboard().string = pwd
+                UIPasteboard.general.string = pwd
             }
         }
         catch {

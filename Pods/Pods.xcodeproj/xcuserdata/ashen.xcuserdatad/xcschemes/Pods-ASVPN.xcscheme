@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D11393BB4EA178E5CF5741F0459BD410"
+               BlueprintIdentifier = "63BA62273D7088625E27FCE33140471D"
                BuildableName = "Pods_ASVPN.framework"
                BlueprintName = "Pods-ASVPN"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D11393BB4EA178E5CF5741F0459BD410"
+            BlueprintIdentifier = "63BA62273D7088625E27FCE33140471D"
             BuildableName = "Pods_ASVPN.framework"
             BlueprintName = "Pods-ASVPN"
             ReferencedContainer = "container:Pods.xcodeproj">

@@ -98,12 +98,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8C2BF32C1CC758E400544B75 /* Build configuration list for PBXNativeTarget "ASVPN" */;
 			buildPhases = (
-				6BF4330BD8052D02D5E292DD /* Check Pods Manifest.lock */,
+				6BF4330BD8052D02D5E292DD /* [CP] Check Pods Manifest.lock */,
 				8C2BF3161CC758E300544B75 /* Sources */,
 				8C2BF3171CC758E300544B75 /* Frameworks */,
 				8C2BF3181CC758E300544B75 /* Resources */,
-				80A3F72EF0AD66B682408E9B /* Embed Pods Frameworks */,
-				3F25CF20BE3448D26915D0FC /* Copy Pods Resources */,
+				80A3F72EF0AD66B682408E9B /* [CP] Embed Pods Frameworks */,
+				3F25CF20BE3448D26915D0FC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -126,6 +126,7 @@
 				TargetAttributes = {
 					8C2BF3191CC758E300544B75 = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0810;
 					};
 				};
 			};
@@ -161,14 +162,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3F25CF20BE3448D26915D0FC /* Copy Pods Resources */ = {
+		3F25CF20BE3448D26915D0FC /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -176,29 +177,29 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ASVPN/Pods-ASVPN-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6BF4330BD8052D02D5E292DD /* Check Pods Manifest.lock */ = {
+		6BF4330BD8052D02D5E292DD /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		80A3F72EF0AD66B682408E9B /* Embed Pods Frameworks */ = {
+		80A3F72EF0AD66B682408E9B /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -336,6 +337,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Ashen-http---www.devashen.com-.ASVPN";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -349,6 +351,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Ashen-http---www.devashen.com-.ASVPN";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
