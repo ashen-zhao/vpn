@@ -53,7 +53,9 @@ class ViewController: UIViewController {
        
         let task = session.dataTask(with: request, completionHandler: { (data, response, error)->Void in
             if error == nil{
-                self.check(String(data: data!, encoding: String.Encoding.utf8)!)
+                DispatchQueue.main.async {
+                    self.check(String(data: data!, encoding: String.Encoding.utf8)!)
+                }
             }
         })
        
