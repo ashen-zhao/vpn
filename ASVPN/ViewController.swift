@@ -45,7 +45,7 @@ class ViewController: UIViewController {
     func getVPN() {
         
      
-        let url = URL(string: "http://www.ishadowsocks.net")
+        let url = URL(string: "http://www.ishadowsocks.info/")
         let request = URLRequest(url: url!)
      
         let congiguration = URLSessionConfiguration.default
