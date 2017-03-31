@@ -45,7 +45,7 @@ class ViewController: UIViewController {
     func getVPN() {
         
      
-        let url = URL(string: "http://www.ishadowsocks.info/")
+        let url = URL(string: "http://get.ishadow.website/")
         let request = URLRequest(url: url!)
      
         let congiguration = URLSessionConfiguration.default
@@ -65,20 +65,20 @@ class ViewController: UIViewController {
     func check(_ str: String) {
         
         do {
-            var pattern = "<h4>([\\w\\W])服务器地址:(.*?)</h4>"
-            pattern = pattern.appending("[\\w\\W]+?端口:(.*?)</h4>")
-            pattern = pattern.appending("[\\w\\W]+?密码:(.*?)</h4>")
-            pattern = pattern.appending("[\\w\\W]+?加密方式:(.*?)</h4>")
+            var pattern = "<h4>IP Address:.+?>(.*?)</span>.+?</h4>"
+            pattern = pattern.appending("[\\w\\W]+?Port：(.*?)</h4>")
+            pattern = pattern.appending("[\\w\\W]+?Password:.+?>(.*?)</span>.+?</h4>")
+            pattern = pattern.appending("[\\w\\W]+?Method:(.+?)</h4>")
             let regex = try NSRegularExpression(pattern: pattern, options:
                 NSRegularExpression.Options.caseInsensitive)
             
             let res = regex.matches(in: str, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, str.characters.count))
             for checkingRes in res {
                 let name = (str as NSString).substring(with: checkingRes.rangeAt(1))
-                let ip = (str as NSString).substring(with: checkingRes.rangeAt(2))
-                let port = (str as NSString).substring(with: checkingRes.rangeAt(3))
-                let pwd = (str as NSString).substring(with: checkingRes.rangeAt(4))
-                let style = (str as NSString).substring(with: checkingRes.rangeAt(5))
+                let ip = (str as NSString).substring(with: checkingRes.rangeAt(1))
+                let port = (str as NSString).substring(with: checkingRes.rangeAt(2))
+                let pwd = (str as NSString).substring(with: checkingRes.rangeAt(3))
+                let style = (str as NSString).substring(with: checkingRes.rangeAt(4))
                 
                 let vpnmodel = VPNModel()
                 vpnmodel.ip = name + "服务器地址：" + ip.uppercased()
